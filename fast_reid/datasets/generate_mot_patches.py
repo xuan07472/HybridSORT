@@ -50,6 +50,10 @@ def main(args):
     os.makedirs(train_save_path, exist_ok=True)
     test_save_path = os.path.join(save_path, 'bounding_box_test')
     os.makedirs(test_save_path, exist_ok=True)
+    query_save_path = os.path.join(save_path, 'query')
+    os.makedirs(query_save_path, exist_ok=True)
+    # gallery_save_path = os.path.join(save_path, 'gallery')
+    # os.makedirs(gallery_save_path, exist_ok=True)
 
     # Get gt data
     data_path = os.path.join(args.data_path, 'MOT' + str(args.mot), 'train')
@@ -104,12 +108,24 @@ def main(args):
                 # plt.imshow(patch)
                 # plt.show()
 
-                fileName = (str(id_+id_offset)).zfill(7) + '_' + seq + '_' + (str(f+1)).zfill(7) + '_acc_data.bmp'
-
+                train_fileName = (str(id_+id_offset)).zfill(4) + '_c1s1_' + '_' + (str(f+1)).zfill(6) + '.jpg'
+                test_fileName = (str(id_+id_offset)).zfill(4) + '_c1s1_'  + '_' + (str(f+1)).zfill(6) + '.jpg'
+                gallery_fileName = (str(id_+id_offset)).zfill(4) + '_c2s2_' + '_' + (str(f+1)).zfill(6) + '.jpg'
+                
+                # 每5张
+                # if f < num_frames // 2:
+                #     if f % 5 == 0:
+                #         cv2.imwrite(os.path.join(train_save_path, train_fileName), patch)
+                # else:
+                #     if f % 5 == 0:
+                #         cv2.imwrite(os.path.join(test_save_path, test_fileName), patch)
+                #     # cv2.imwrite(os.path.join(gallery_fileName, gallery_fileName), patch)
+                    
                 if f < num_frames // 2:
-                    cv2.imwrite(os.path.join(train_save_path, fileName), patch)
+                    cv2.imwrite(os.path.join(train_save_path, train_fileName), patch)
                 else:
-                    cv2.imwrite(os.path.join(test_save_path, fileName), patch)
+                    cv2.imwrite(os.path.join(test_save_path, test_fileName), patch)
+                    # cv2.imwrite(os.path.join(gallery_fileName, gallery_fileName), patch)
 
         id_offset += max_id_per_seq
 

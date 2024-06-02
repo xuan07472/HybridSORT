@@ -142,3 +142,8 @@ visualizations
 results/
 error_log.txt
 .idea/
+
+# Custom configuration
+datasets/
+data/
+try.ipynb
